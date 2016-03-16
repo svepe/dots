@@ -16,5 +16,5 @@ ln -s ~/Scripts/dots/init.vim        ~/.config/nvim/init.vim
 if [ ! -d "~/.config/nvim/colors" ]; then
   mkdir ~/.config/nvim/colors
 fi
-cp ~/Scripts/dots/monokai.vim        ~/.config/nvim/init.vim
+cp ~/Scripts/dots/monokai.vim        ~/.config/nvim/colors/
 
