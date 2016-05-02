@@ -18,3 +18,10 @@ if [ ! -d "~/.config/nvim/colors" ]; then
 fi
 cp ~/Scripts/dots/monokai.vim        ~/.config/nvim/colors/
 
+if [ ! -d "~/.config/nvim/bundle" ]; then
+  mkdir ~/.config/nvim/bundle
+fi
+
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
+
+echo "Setup successfull. Now run PluginInstall within nvim."
