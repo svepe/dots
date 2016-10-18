@@ -6,4 +6,4 @@ Edit `/usr/share/X11/xkb/symbols/pc`
 
 ## Spacemacs
 ### Install
-`sudo apt-get install unifont`
+`sudo apt-get install unifont fonts-nanum`
