@@ -10,12 +10,18 @@ function __promptline_ps1 {
   # section "a" slices
 
   local rosmaster_fg="${wrap}38;5;110${end_wrap}"
+  local rosmaster_uri
+  if [[ "${PROMPTLINE_ROSMASTER}" == true ]]; then
+    rosmaster_uri="${rosmaster_fg}[$(echo $ROS_MASTER_URI | cut -d: -f2 | cut -c 3-)]${reset}${b_bg}"
+  else
+    rosmaster_uri=""
+fi 
   # section "b" header
   slice_prefix="${b_bg}${sep}${b_fg}${b_bg}${space}" slice_suffix="$space${b_sep_fg}" slice_joiner="${b_fg}${b_bg}${alt_sep}${space}" slice_empty_prefix="${b_fg}${b_bg}${space}"
   [ $is_prompt_empty -eq 1 ] && slice_prefix="$slice_empty_prefix"
   # section "b" slices
   __promptline_wrapper "\u" "$slice_prefix" "$slice_suffix" && { slice_prefix="$slice_joiner"; is_prompt_empty=0; }
-  __promptline_wrapper "\h${rosmaster_fg}[$(echo $ROS_MASTER_URI | cut -d: -f2 | cut -c 3-)]${reset}${b_bg}" "$slice_prefix" "$slice_suffix" && { slice_prefix="$slice_joiner"; is_prompt_empty=0; }
+  __promptline_wrapper "\h${rosmaster_uri}" "$slice_prefix" "$slice_suffix" && { slice_prefix="$slice_joiner"; is_prompt_empty=0; }
   __promptline_wrapper "$(__promptline_vcs_branch)" "$slice_prefix" "$slice_suffix" && { slice_prefix="$slice_joiner"; is_prompt_empty=0; }
 
   # section "c" header
