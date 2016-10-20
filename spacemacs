@@ -97,7 +97,7 @@ values."
    ;; when the current branch is not `develop'. Note that checking for
    ;; new versions works via git commands, thus it calls GitHub services
    ;; whenever you start Emacs. (default nil)
-   dotspacemacs-check-for-update nil
+   dotspacemacs-check-for-update t
    ;; If non-nil, a form that evaluates to a package directory. For example, to
    ;; use different package directories for different Emacs versions, set this
    ;; to `emacs-version'.
@@ -314,6 +314,7 @@ you should place your code here."
   (add-to-list 'auto-mode-alist '("\\.bashrc\\'$" . sh-mode))
   (add-to-list 'auto-mode-alist '("\\.sh\\'$" . sh-mode))
   (diff-hl-flydiff-mode)
+  (setq vc-follow-symlinks t)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
