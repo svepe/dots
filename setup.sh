@@ -22,6 +22,9 @@ if [ ! -d "~/.config/nvim/bundle" ]; then
   mkdir ~/.config/nvim/bundle
 fi
 
+# spacemacs
+ln -s ~/Scripts/dots/spacemacs       ~/.spacemacs
+
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
 
 echo "Setup successfull. Now run PluginInstall within nvim."
