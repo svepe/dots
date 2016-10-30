@@ -36,17 +36,20 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     auto-completion
      clojure
      (colors :variables
               colors-colorize-identifiers 'all)
      git
      helm
      markdown
-     python
+     (python :variables
+             python-enable-yapf-format-on-save t)
      shell-scripts
      spell-checking
      syntax-checking
-     themes-megapack
+     ;; themes-megapack
+     theming
      (version-control :variables
                       version-control-diff-tool 'diff-hl)
      ;; auto-completion
@@ -61,7 +64,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(monokai-theme)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -309,12 +312,53 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (setq neo-theme 'nerd)
+  ;; Remove the size of the buffer from the spaceline
   (spaceline-toggle-buffer-size-off)
+  ;; Remove the encoding info from the spaceline
   (spaceline-toggle-buffer-encoding-abbrev-off)
   (add-to-list 'auto-mode-alist '("\\.bashrc\\'$" . sh-mode))
   (add-to-list 'auto-mode-alist '("\\.sh\\'$" . sh-mode))
+  ;; Display git marks in real time
   (diff-hl-flydiff-mode)
+  ;; Open file pointed to by a symlink
   (setq vc-follow-symlinks t)
+
+  (setq-default
+    theming-modifications
+    '((monokai
+      ;; Flycheck
+      (flycheck-fringe-error :background nil
+                             :foreground "#f92663")
+      (flycheck-fringe-warning :background nil
+                               :foreground "#e6db20")
+      (flycheck-fringe-info :background nil)
+
+      ;; Font locking
+      ;; (font-lock-comment-face :slant italic)
+      ;; (font-lock-string-face :slant italic)
+      ;; (font-lock-doc-face :slant italic)
+      ;; (font-lock-keyword-face :weight bold)
+      ;; (font-lock-builtin-face :weight semi-bold)
+      ;; (font-lock-warning-face :underline nil)
+
+      ;; Modeline
+      ;; (header-line :box (:color "#555555" :line-width 1))
+      ;; (mode-line :box (:color "#999999" :line-width 1 :style released-button))
+      ;; (powerline-active1 :box (:color "#999999" :line-width 1 :style released-button)
+                        ;; :background "#5a5a5a")
+      ;; (powerline-active2 :box (:color "#999999" :line-width 1 :style released-button))
+      ;; (mode-line-inactive :box (:color "#666666" :line-width 1 :style released-button))
+      ;; (powerline-inactive1 :box (:color "#666666" :line-width 1 :style released-button))
+      ;; (powerline-inactive2 :box (:color "#666666" :line-width 1 :style released-button))
+      ;; (helm-prefarg :foreground "PaleGreen")
+
+      ;; Other
+      (company-tooltip-annotation :foreground "#ff9eb8")
+      (company-tooltip-annotation-selection :background "#66d9ef")
+      (spacemacs-transient-state-title-face :background nil
+                                            :foreground nil
+                                            :inherit font-lock-warning-face)
+    )))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
