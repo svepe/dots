@@ -11,7 +11,7 @@ ROS master in the promptline.
 `sudo apt-get install unifont fonts-nanum`
 
 ### TODO:
-* Buffer list
+* Buffer list (tabbar package)
 * Icons for modes
 
 ## Nvidia
