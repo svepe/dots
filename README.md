@@ -9,3 +9,28 @@ ROS master in the promptline.
 ## Spacemacs
 ### Install
 `sudo apt-get install unifont fonts-nanum`
+
+### TODO:
+* Buffer list (tabbar package)
+* Icons for modes
+
+## Nvidia
+
+In case of any issues witht the drirvers run:
+```
+sudo apt-get purge nvidia*
+sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo apt-get update
+sudo apt-get install nvidia-370
+```
+
+### ASUS Backlight
+
+Use a fork of [guillaumezin/nvidiabl](https://github.com/guillaumezin/nvidiabl):
+
+```
+wget https://github.com/madsherlock/nvidiabl/raw/master/install/deb/nvidiabl-dkms_0.88_all.deb
+sudo dpkg -i nvidiabl-dkms-0.88_all.deb
+rm nvidiabl-dkms_0.88_all.deb
+echo "nvidiabl" >> sudo /etc/modules
+```
