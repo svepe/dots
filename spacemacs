@@ -42,16 +42,17 @@ values."
               colors-colorize-identifiers 'all)
      git
      helm
+     html
      markdown
      (python :variables
              python-enable-yapf-format-on-save t)
      shell-scripts
      spell-checking
      syntax-checking
-     ;; themes-megapack
      theming
      (version-control :variables
                       version-control-diff-tool 'diff-hl)
+     yaml
      ;; auto-completion
      ;; better-defaults
      ;; emacs-lisp
@@ -363,3 +364,20 @@ you should place your code here."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(magit-commit-arguments (quote ("--verbose"))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip-annotation ((t (:foreground "#ff9eb8"))))
+ '(company-tooltip-annotation-selection ((t (:background "#66d9ef"))))
+ '(flycheck-fringe-error ((t (:background nil :foreground "#f92663"))))
+ '(flycheck-fringe-info ((t (:background nil))))
+ '(flycheck-fringe-warning ((t (:background nil :foreground "#e6db20"))))
+ '(spacemacs-transient-state-title-face ((t (:background nil :foreground nil :inherit font-lock-warning-face)))))
