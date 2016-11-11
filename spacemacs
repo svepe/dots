@@ -324,6 +324,12 @@ you should place your code here."
   ;; Open file pointed to by a symlink
   (setq vc-follow-symlinks t)
 
+  ;; Disable arrow keys
+  (define-key evil-motion-state-map (kbd "<left>") nil)
+  (define-key evil-motion-state-map (kbd "<right>") nil)
+  (define-key evil-motion-state-map (kbd "<up>") nil)
+  (define-key evil-motion-state-map (kbd "<down>") nil)
+
   (setq-default
     theming-modifications
     '((monokai
