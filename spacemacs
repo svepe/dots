@@ -40,6 +40,7 @@ values."
      clojure
      (colors :variables
               colors-colorize-identifiers 'all)
+     evil-snipe
      git
      helm
      html
@@ -162,7 +163,7 @@ values."
    dotspacemacs-emacs-leader-key "M-m"
    ;; Major mode leader key is a shortcut key which is the equivalent of
    ;; pressing `<leader> m`. Set it to `nil` to disable it. (default ",")
-   dotspacemacs-major-mode-leader-key ","
+   dotspacemacs-major-mode-leader-key nil
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
    ;; (default "C-M-m)
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
@@ -323,6 +324,9 @@ you should place your code here."
   (diff-hl-flydiff-mode)
   ;; Open file pointed to by a symlink
   (setq vc-follow-symlinks t)
+
+  (setq evil-snipe-scope 'visible)
+  (setq evil-snipe-repeat-scope 'visible)
 
   ;; Disable arrow keys
   (global-unset-key (kbd "<left>"))
