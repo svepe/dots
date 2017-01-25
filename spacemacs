@@ -37,13 +37,15 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      auto-completion
-     clojure
+     (clojure :variables
+              clojure-enable-fancify-symbols t)
      (colors :variables
               colors-colorize-identifiers 'all)
      evil-snipe
      git
      helm
      html
+     javascript
      markdown
      (python :variables
              python-enable-yapf-format-on-save t)
