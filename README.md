@@ -14,6 +14,10 @@ ROS master in the promptline.
 * Buffer list (tabbar package)
 * Icons for modes
 
+## Cinnamon
+`sudo cp cinnamon/classicSwitcher.js /usr/share/cinnamon/js/ui/appSwitcher/classicSwitcher`
+Restart cinnamon.
+
 ## Nvidia
 
 In case of any issues witht the drirvers run:
