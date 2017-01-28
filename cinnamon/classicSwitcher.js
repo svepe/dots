@@ -29,7 +29,7 @@ const THUMBNAIL_FADE_TIME = 0.1; // seconds
 
 const PREVIEW_DELAY_TIMEOUT = 0; // milliseconds
 var PREVIEW_SWITCHER_FADEOUT_TIME = 0.2; // seconds
-const PREVIEW_FADE_OPACITY = 100;
+const PREVIEW_FADE_OPACITY = 120;
 
 const iconSizes = [96, 64, 48, 32, 22];
 
@@ -326,7 +326,7 @@ ClassicSwitcher.prototype = {
             let actor = this._windows[i].get_compositor_private();
             Tweener.addTween(actor,
                              { opacity: PREVIEW_FADE_OPACITY,
-                               time: PREVIEW_SWITCHER_FADEOUT_TIME / 4,
+                               time: PREVIEW_SWITCHER_FADEOUT_TIME / 2,
                                transition: 'linear'});
         }
 
