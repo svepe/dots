@@ -24,7 +24,7 @@ const POPUP_FADE_OUT_TIME = 0.1; // seconds
 const APP_ICON_HOVER_TIMEOUT = 200; // milliseconds
 
 const THUMBNAIL_DEFAULT_SIZE = 256;
-const THUMBNAIL_POPUP_TIME = 10; // milliseconds
+const THUMBNAIL_POPUP_TIME = 300; // milliseconds
 const THUMBNAIL_FADE_TIME = 0.1; // seconds
 
 const PREVIEW_DELAY_TIMEOUT = 0; // milliseconds
@@ -43,14 +43,14 @@ function ClassicSwitcher() {
 
 ClassicSwitcher.prototype = {
     __proto__: AppSwitcher.AppSwitcher.prototype,
-    
+
     _init: function() {
         AppSwitcher.AppSwitcher.prototype._init.apply(this, arguments);
 
         this.actor = new Cinnamon.GenericContainer({ name: 'altTabPopup',
                                                   reactive: true,
                                                   visible: false });
-        
+
         this._thumbnailTimeoutId = 0;
         this.thumbnailsVisible = false;
         this._displayPreviewTimeoutId = 0;
@@ -59,7 +59,7 @@ ClassicSwitcher.prototype = {
 
         if (!this._setupModal())
             return;
-            
+
         let styleSettings = global.settings.get_string("alttab-switcher-style");
         let features = styleSettings.split('+');
         this._iconsEnabled = features.indexOf('icons') !== -1;
@@ -70,13 +70,22 @@ ClassicSwitcher.prototype = {
 
         this._showThumbnails = this._thumbnailsEnabled && !this._iconsEnabled;
         this._showArrows = this._thumbnailsEnabled && this._iconsEnabled;
-        
+
         this._updateList(0);
+
+        this._cachedOpacities = [];
+        if (this._previewEnabled) {
+            for (let i = 0; i < this._windows.length; i++) {
+                let actor = this._windows[i].get_compositor_private();
+                this._cachedOpacities.push(actor.opacity);
+            }
+        }
+
 
         this.actor.connect('get-preferred-width', Lang.bind(this, this._getPreferredWidth));
         this.actor.connect('get-preferred-height', Lang.bind(this, this._getPreferredHeight));
         this.actor.connect('allocate', Lang.bind(this, this._allocate));
-        
+
         // Need to force an allocation so we can figure out whether we
         // need to scroll when selecting
         this.actor.opacity = 0;
@@ -143,12 +152,12 @@ ClassicSwitcher.prototype = {
 
     _show: function() {
         Main.panelManager.panels.forEach(function(panel) { panel.actor.set_reactive(false); });
-        
+
         this.actor.opacity = 255;
         this._initialDelayTimeoutId = 0;
         this._next();
     },
-    
+
     _hide: function() {
         // window title and icon
         if(this._windowTitle) {
@@ -174,7 +183,7 @@ ClassicSwitcher.prototype = {
     _updateList: function(direction) {
         if(direction !== 0)
             return;
-        
+
         if (this._appList) {
             this._clearPreview();
             this._destroyThumbnails();
@@ -188,7 +197,7 @@ ClassicSwitcher.prototype = {
         }
         this._appList.connect('item-activated', Lang.bind(this, this._appActivated));
         this._appList.connect('item-entered', Lang.bind(this, this._appEntered));
-        
+
         this._appIcons = this._appList.icons;
         this.actor.get_allocation_box();
     },
@@ -215,17 +224,17 @@ ClassicSwitcher.prototype = {
         this._updateList(0);
         this._select(0);
     },
-    
+
     _setCurrentWindow: function(window) {
         this._appList.highlight(this._currentIndex, false);
         this._doWindowPreview();
         this._destroyThumbnails();
-        
+
         if (this._thumbnailTimeoutId != 0) {
             Mainloop.source_remove(this._thumbnailTimeoutId);
             this._thumbnailTimeoutId = 0;
         }
-        
+
         if (this._showArrows) {
             this._thumbnailTimeoutId = Mainloop.timeout_add(
                 THUMBNAIL_POPUP_TIME, Lang.bind(this, function() {
@@ -249,12 +258,15 @@ ClassicSwitcher.prototype = {
         }
 
         // Restore the transperancy of all windows
-        for (let i = 0; i < this._windows.length; i++) {
-            let actor = this._windows[i].get_compositor_private();
-            Tweener.addTween(actor,
-                            { opacity: this._cachedOpacities[i],
-			      time: PREVIEW_SWITCHER_FADEOUT_TIME / 4,
-			      transition: 'linear'});
+        if (this._cachedOpacities.length > 0) {
+            for (let i = 0; i < this._windows.length; i++) {
+                let actor = this._windows[i].get_compositor_private();
+                // Make sure transition is fast enough in order to avoid blinking
+                Tweener.addTween(actor,
+                                 { opacity: this._cachedOpacities[i],
+                                   time: 0.001,
+                                   transition: 'linear'});
+            }
         }
     },
 
@@ -272,7 +284,7 @@ ClassicSwitcher.prototype = {
     _windowActivated : function(thumbnailList, n) {
         this._activateSelected();
     },
-    
+
     _clearPreview: function() {
         if (this._previewClones) {
             for (let i = 0; i < this._previewClones.length; ++i) {
@@ -291,7 +303,7 @@ ClassicSwitcher.prototype = {
             this._previewClones = null;
         }
     },
-    
+
     _doWindowPreview: function() {
         if (!this._previewEnabled || this._windows.length < 1)
         {
@@ -306,27 +318,17 @@ ClassicSwitcher.prototype = {
         let delay = PREVIEW_DELAY_TIMEOUT;
         this._displayPreviewTimeoutId = Mainloop.timeout_add(delay, Lang.bind(this, this._showWindowPreview));
     },
-    
+
     _showWindowPreview: function() {
         this._displayPreviewTimeoutId = 0;
-	if (!this._cachedOpacities) {
-            this._cachedOpacities = [];	
-            for (let i = 0; i < this._windows.length; i++) {
-                let actor = this._windows[i].get_compositor_private();
-                this._cachedOpacities.push(actor.opacity);
-	    }
-	}
-        Main.activateWindow(this._windows[this._currentIndex], global.get_current_time())
+
         for (let i = 0; i < this._windows.length; i++) {
             let actor = this._windows[i].get_compositor_private();
-	    let opacity = i == this._currentIndex ? this._cachedOpacities[i] : PREVIEW_FADE_OPACITY;
-	    //global.log(this._cachedOpacities[i]);
             Tweener.addTween(actor,
-                            { opacity: opacity,
-			      time: PREVIEW_SWITCHER_FADEOUT_TIME / 4,
-			      transition: 'linear'});
+                             { opacity: PREVIEW_FADE_OPACITY,
+                               time: PREVIEW_SWITCHER_FADEOUT_TIME / 4,
+                               transition: 'linear'});
         }
-	return;
 
         let childBox = new Clutter.ActorBox();
 
@@ -351,6 +353,7 @@ ClassicSwitcher.prototype = {
             lastClone = clone.actor;
         }
 
+        this._clearPreview();
         this._previewClones = previewClones;
 
         if (!this._previewBackdrop) {
@@ -367,7 +370,7 @@ ClassicSwitcher.prototype = {
             backdrop.allocate(childBox, 0);
             backdrop.opacity = 0;
             Tweener.addTween(backdrop,
-                            { opacity: 255,
+                             { opacity: this._cachedOpacities[this._currentIndex],
                             time: PREVIEW_SWITCHER_FADEOUT_TIME / 4,
                             transition: 'linear'
                             });
@@ -383,7 +386,7 @@ ClassicSwitcher.prototype = {
         this.actor.remove_actor(thumbnailsActor);
         thumbnailsActor.destroy();
         this.thumbnailsVisible = false;
-        
+
     },
 
     _createThumbnails : function() {
@@ -427,10 +430,10 @@ AppIcon.prototype = {
         let title = window.get_title();
         if (title) {
             if (window.minimized) {
-                this.label = new St.Label({ text: "[" + title + "]"});               
-                let contrast_effect = new Clutter.BrightnessContrastEffect();                
-                contrast_effect.set_brightness(-0.5, -0.5, -0.5);                         
-                this._iconBin.add_effect(contrast_effect);                
+                this.label = new St.Label({ text: "[" + title + "]"});
+                let contrast_effect = new Clutter.BrightnessContrastEffect();
+                contrast_effect.set_brightness(-0.5, -0.5, -0.5);
+                this._iconBin.add_effect(contrast_effect);
             }
             else if (window.tile_type == Meta.WindowTileType.TILED) {
                 this.label = new St.Label({ text: "|" + title });
@@ -439,9 +442,9 @@ AppIcon.prototype = {
                 this.label = new St.Label({ text: "||" + title });
             }
             else {
-                this.label = new St.Label({ text: title });    
+                this.label = new St.Label({ text: title });
             }
-            
+
             let bin = new St.Bin({ x_align: St.Align.MIDDLE });
             bin.add_actor(this.label);
             this.actor.add(bin);
@@ -454,7 +457,7 @@ AppIcon.prototype = {
 
     set_size: function(size) {
         if (this.showThumbnail){
-            this.icon = new St.Group();
+            this.icon = new St.Widget();
             let clones = WindowUtils.createWindowClone(this.window, size, size, true, true);
             for (let i in clones) {
                 let clone = clones[i];
@@ -913,10 +916,10 @@ AppList.prototype = {
         if (this._curApp != -1) {
             this._arrows[this._curApp].hide();
         }
-        
+
         SwitcherList.prototype.highlight.call(this, n, justOutline);
         this._curApp = n;
- 
+
         if (n != -1 && this._showArrows) {
             this._arrows[n].show();
         }
@@ -1003,7 +1006,7 @@ ThumbnailList.prototype = {
 
         for (let i = 0; i < this._thumbnailBins.length; i++) {
             let metaWindow = this._windows[i];
-            let container = new St.Group();
+            let container = new St.Widget();
             let clones = WindowUtils.createWindowClone(metaWindow, availHeight, availHeight, true, true);
             for (let j = 0; j < clones.length; j++) {
               let clone = clones[j];
