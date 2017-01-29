@@ -264,7 +264,7 @@ ClassicSwitcher.prototype = {
                 // Make sure transition is fast enough in order to avoid blinking
                 Tweener.addTween(actor,
                                  { opacity: this._cachedOpacities[i],
-                                   time: 0.001,
+                                   time: PREVIEW_SWITCHER_FADEOUT_TIME / 2,
                                    transition: 'linear'});
             }
         }
@@ -291,7 +291,7 @@ ClassicSwitcher.prototype = {
                 let clone = this._previewClones[i];
                 Tweener.addTween(clone, {
                     opacity: 0,
-                    time: PREVIEW_SWITCHER_FADEOUT_TIME / 4,
+                    time: PREVIEW_SWITCHER_FADEOUT_TIME / 2,
                     transition: 'linear',
                     onCompleteScope: this,
                     onComplete: function() {
@@ -324,8 +324,9 @@ ClassicSwitcher.prototype = {
 
         for (let i = 0; i < this._windows.length; i++) {
             let actor = this._windows[i].get_compositor_private();
+            let opacity = i == this._currentIndex ? this._cachedOpacities[i] : PREVIEW_FADE_OPACITY;
             Tweener.addTween(actor,
-                             { opacity: PREVIEW_FADE_OPACITY,
+                             { opacity: opacity,
                                time: PREVIEW_SWITCHER_FADEOUT_TIME / 2,
                                transition: 'linear'});
         }
