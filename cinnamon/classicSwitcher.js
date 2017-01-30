@@ -327,7 +327,7 @@ ClassicSwitcher.prototype = {
             let opacity = i == this._currentIndex ? this._cachedOpacities[i] : PREVIEW_FADE_OPACITY;
             Tweener.addTween(actor,
                              { opacity: opacity,
-                               time: PREVIEW_SWITCHER_FADEOUT_TIME / 2,
+                               time: PREVIEW_SWITCHER_FADEOUT_TIME / 4, 
                                transition: 'linear'});
         }
 
