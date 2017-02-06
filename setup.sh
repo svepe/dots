@@ -1,7 +1,7 @@
-#/bin/sh	
+#/bin/sh
 
 # promptline
-ln -s ~/Scripts/dots/promptline.sh   ~/.promptline.sh 
+ln -s ~/Scripts/dots/promptline.sh   ~/.promptline.sh
 
 # tmux
 ln -s ~/Scripts/dots/tmux.conf       ~/.tmux.conf
@@ -24,6 +24,8 @@ fi
 
 # spacemacs
 ln -s ~/Scripts/dots/spacemacs       ~/.spacemacs
+sudo pip install autoflake
+sudo pip install flake8
 
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
 

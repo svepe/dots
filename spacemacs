@@ -133,7 +133,7 @@ values."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
    ;; (default nil)
-   dotspacemacs-startup-lists '()
+   dotspacemacs-startup-lists '((recents . 8) (projects . 4))
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
@@ -221,7 +221,7 @@ values."
    dotspacemacs-helm-use-fuzzy 'always
    ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content. (default nil)
-   dotspacemacs-enable-paste-transient-state nil
+   dotspacemacs-enable-paste-transient-state t
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
    dotspacemacs-which-key-delay 0.4
@@ -347,6 +347,21 @@ you should place your code here."
   (define-key evil-motion-state-map (kbd "<right>") nil)
   (define-key evil-motion-state-map (kbd "<up>") nil)
   (define-key evil-motion-state-map (kbd "<down>") nil)
+
+  (add-hook 'cider-browse-ns-mode-hook
+            (lambda()
+              (define-key cider-browse-ns-mode-map
+                [escape] 'quit-window)))
+
+  (add-hook 'cider-popup-buffer-mode-hook
+            (lambda ()
+              (define-key cider-popup-buffer-mode-map
+                [escape] 'cider-popup-buffer-quit-function)))
+
+  (add-hook 'neotree-mode-hook
+            (lambda ()
+              (define-key neotree-mode-map
+               [escape] 'neotree-toggle)))
 
   (setq-default
     theming-modifications
