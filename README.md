@@ -8,7 +8,8 @@ Use `export PROMPTLINE_ROSMASTER=true` to enable printing of the current
 ROS master in the promptline.
 ## Spacemacs
 ### Install
-`sudo apt-get install unifont fonts-nanum`
+`sudo apt-get install unifont ttf-unifonts`
+Not sure if `fonts-nanum` should be installed as well.
 
 ### TODO:
 * Buffer list (tabbar package)
