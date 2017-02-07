@@ -49,6 +49,7 @@ values."
      markdown
      (python :variables
              python-enable-yapf-format-on-save t)
+     org
      shell-scripts
      spell-checking
      syntax-checking
@@ -56,7 +57,6 @@ values."
      (version-control :variables
                       version-control-diff-tool 'diff-hl)
      yaml
-     ;; auto-completion
      ;; better-defaults
      ;; emacs-lisp
      ;; org
@@ -352,6 +352,11 @@ you should place your code here."
             (lambda()
               (define-key cider-browse-ns-mode-map
                 [escape] 'quit-window)))
+
+  (add-hook 'cider-test-report-mode-hook
+            (lambda()
+              (define-key cider-test-report-mode-map
+                [escape] 'cider-popup-buffer-quit)))
 
   (add-hook 'cider-popup-buffer-mode-hook
             (lambda ()
