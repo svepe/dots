@@ -42,7 +42,6 @@ values."
      (colors :variables
               colors-colorize-identifiers 'all)
      evil-snipe
-     evil-cleverparens
      git
      helm
      html
@@ -330,9 +329,6 @@ you should place your code here."
 
   (setq evil-snipe-scope 'visible)
   (setq evil-snipe-repeat-scope 'visible)
-
-  (spacemacs/toggle-evil-cleverparens-on)
-  (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
 
   ;; Disable arrow keys
   (global-unset-key (kbd "<left>"))
