@@ -47,10 +47,12 @@ values."
      helm
      html
      javascript
+     latex
      markdown
      (python :variables
-             python-enable-yapf-format-on-save t)
+             python-enable-yapf-format-on-save nil)
      org
+     react
      shell-scripts
      spell-checking
      syntax-checking
