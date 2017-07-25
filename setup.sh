@@ -4,6 +4,7 @@
 ln -s ~/Scripts/dots/promptline.sh   ~/.promptline.sh
 
 # tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ln -s ~/Scripts/dots/tmux.conf       ~/.tmux.conf
 ln -s ~/Scripts/dots/tmuxline.conf   ~/.tmuxline.conf
 

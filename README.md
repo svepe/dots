@@ -1,5 +1,10 @@
 # dots
+## Terminal colors
+Run `bash base16-monokai.dark.sh` to setup the monokai gnome-terminal palette from https://github.com/chriskempson/base16-gnome-terminal
+
 ## Fonts
+Install the powerline fonts at https://github.com/powerline/fonts
+
 In `gnome-terminal` use the `DejaVu Sans Mono for Powerline | 11` font.
 ## Remapping keyboard keys:
 Edit `/usr/share/X11/xkb/symbols/pc`
@@ -13,6 +18,12 @@ ROS master in the promptline.
 ### Install
 `sudo apt-get install unifont ttf-unifonts`
 Not sure if `fonts-nanum` should be installed as well.
+
+### Exports
+`sudo ln -s ~/Scripts/dots/spacemacs_profile.sh /etc/profile.d/spacemacs.sh`
+
+### Aliases
+`ln -s ~/Scripts/dots/bash_aliases ~/.bash_aliases`
 
 ### TODO:
 * Buffer list (tabbar package)
@@ -53,7 +64,7 @@ Copy the theme you want to modify in `~/.themes` and rename it. Edit the `metaci
 	<distance name="right_width" value="0" />
 	<distance name="left_titlebar_edge" value="1"/>
 	<distance name="right_titlebar_edge" value="1"/>
-	<distance name="title_vertical_pad" value="0"/> 
+	<distance name="title_vertical_pad" value="0"/>
 	<border name="title_border" left="0" right="0" top="0" bottom="0"/>
 	<border name="button_border" left="0" right="0" top="0" bottom="0"/>
 	<distance name="bottom_height" value="0" />
