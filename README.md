@@ -32,6 +32,9 @@ a GUI client is attached. In general, to run multiple servers use:
 
 `emacs --daemon=NAME` and `emacsclient -s NAME`
 
+## Safeeyes
+`ln -s /home/svetlin/Scripts/dots/safeeyes.json /home/svetlin/.config/safeeyes/`
+
 ### TODO:
 * Buffer list (tabbar package)
 * Icons for modes
