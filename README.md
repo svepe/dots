@@ -25,6 +25,16 @@ Not sure if `fonts-nanum` should be installed as well.
 ### Aliases
 `ln -s ~/Scripts/dots/bash_aliases ~/.bash_aliases`
 
+### Server/Client
+One server should be run for GUI clients and one for terminal clients,
+otherwise the terminal clients stop being rendered correctly once
+a GUI client is attached. In general, to run multiple servers use:
+
+`emacs --daemon=NAME` and `emacsclient -s NAME`
+
+## Safeeyes
+`ln -s /home/svetlin/Scripts/dots/safeeyes.json /home/svetlin/.config/safeeyes/`
+
 ### TODO:
 * Buffer list (tabbar package)
 * Icons for modes

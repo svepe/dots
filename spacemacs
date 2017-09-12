@@ -332,6 +332,8 @@ you should place your code here."
   (setq evil-snipe-scope 'visible)
   (setq evil-snipe-repeat-scope 'visible)
 
+  (setq evil-search-module 'evil-search)
+
   ;; Disable arrow keys
   (global-unset-key (kbd "<left>"))
   (global-unset-key (kbd "<right>"))
