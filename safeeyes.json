@@ -3,9 +3,9 @@
         "skip_break": [],
         "take_break": []
     },
-    "allow_postpone": false,
+    "allow_postpone": true,
     "audible_alert": false,
-    "break_interval": 10,
+    "break_interval": 15,
     "custom_exercises": {},
     "disable_options": [
         {
@@ -33,7 +33,7 @@
     "idle_time": 1,
     "language": "system",
     "lock_screen_command": [],
-    "long_break_duration": 120,
+    "long_break_duration": 60,
     "long_breaks": [
         {
             "name": "long_break_walk"
@@ -45,12 +45,12 @@
     "meta": {
         "config_version": "5.0.1"
     },
-    "no_of_short_breaks_per_long_break": 2,
+    "no_of_short_breaks_per_long_break": 3,
     "persist_state": true,
     "plugins": [],
     "postpone_duration": 5,
-    "pre_break_warning_time": 10,
-    "short_break_duration": 30,
+    "pre_break_warning_time": 20,
+    "short_break_duration": 15,
     "short_breaks": [
         {
             "name": "short_break_close_eyes"
@@ -77,7 +77,7 @@
     "shortcut_disable_time": 2,
     "shortcut_postpone": 65,
     "shortcut_skip": 9,
-    "show_time_in_tray": true,
-    "strict_break": true,
+    "show_time_in_tray": false,
+    "strict_break": false,
     "time_to_screen_lock": 5
 }
