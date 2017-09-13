@@ -32,6 +32,13 @@ a GUI client is attached. In general, to run multiple servers use:
 
 `emacs --daemon=NAME` and `emacsclient -s NAME`
 
+Set up the following start up commands:
+
+`emacs --daemon=gui  # smv`
+`emacs --daemon=term # smc`
+
+Put a 1 second delay before launcing the second one, otherwise there might be a racing condition which causes multiple servers to be launched, which do not work anyway.
+
 ## Safeeyes
 `ln -s /home/svetlin/Scripts/dots/safeeyes.json /home/svetlin/.config/safeeyes/`
 
