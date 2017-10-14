@@ -28,6 +28,10 @@ ln -s ~/Scripts/dots/spacemacs       ~/.spacemacs
 sudo pip install autoflake
 sudo pip install flake8
 
+# redshift
+ln -s ~/Scripts/dots/redshift.conf	~/.config/redshift.conf
+
+
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
 
 echo "Setup successfull. Now run PluginInstall within nvim."

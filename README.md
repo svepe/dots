@@ -5,7 +5,17 @@ Run `bash base16-monokai.dark.sh` to setup the monokai gnome-terminal palette fr
 ## Fonts
 Install the powerline fonts at https://github.com/powerline/fonts
 
-In `gnome-terminal` use the `DejaVu Sans Mono for Powerline | 11` font.
+In `gnome-terminal` use the `DejaVu Sans Mono for Powerline | 11` or `Ubuntu Mono derivative Powerline` font.
+
+If in `spacemacs` the buffer shifts upon bracket highlighting (e.g. in LISP mode)
+then the system uses the bold version of the `DejaVu Sans for Powerline font`
+and so you should remove the following files from `~/.local/share/fonts`:
+```
+rm DejaVu Sans Mono Bold for Powerline.ttf
+rm DejaVu Sans Mono Bold Oblique for Powerline.ttf
+rm DejaVu Sans Mono Oblique for Powerline.ttf
+fc-cache -f -v
+```
 ## Remapping keyboard keys:
 Edit `/usr/share/X11/xkb/symbols/pc`
 Remember to disable the CAPS-LOCK key from the Keyboard Settings menu in Cinnamon.
@@ -50,6 +60,9 @@ Put a 1 second delay before launcing the second one, otherwise there might be a 
 `sudo cp cinnamon/classicSwitcher.js /usr/share/cinnamon/js/ui/appSwitcher/classicSwitcher`
 Restart cinnamon.
 
+### Customising
+This file `/usr/share/cinnamon/theme/cinnamon.css` contains all possible CSS tags, so always consult with it. More info about cinnamon is available [here](http://caverdan.com/Mint18Themes/startpage.html).
+
 ## Nvidia
 
 In case of any issues witht the drirvers run:
@@ -86,4 +99,48 @@ Copy the theme you want to modify in `~/.themes` and rename it. Edit the `metaci
 	<border name="button_border" left="0" right="0" top="0" bottom="0"/>
 	<distance name="bottom_height" value="0" />
 </frame_geometry>
+```
+
+## XPS15
+
+### Fix freezing on shutdown:
+
+`sudo ubuntu-drivers autoinstall`
+
+this will install nvidia drivers as well, however you should update them by adding the graphics PPA and installing/upgrading to the latest driver version (tested with nvidia-387).
+
+### Fix prime-select
+Apparently, prime-select has a bug so use this version:
+```
+cd /usr/bin/
+sudo mv prime-select prime-select.bak
+sudo wget https://raw.githubusercontent.com/C11235/nvidia-prime-bugfix/master/prime-select
+sudo chmod 755 prime-select
+```
+
+### Fix booting with iGPU
+Info [here](https://github.com/Bumblebee-Project/bbswitch/issues/148/#issuecomment-304726979) and instructions [here](https://https://www.reddit.com/r/Dell/comments/63cavx/fixed_nvidia_1050_freezing_in_ubuntu_linux/).
+
+In short, open `/etc/default/grub` and edit the line
+```
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+```
+by adding `acpi_rev_override=1` to the list, so it becomes
+```
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash acpi_rev_override=1"
+```
+Then run
+```
+sudo update-grub
+sudo update-grub2
+```
+
+### Switching GPUs
+
+Use PRIME Indicator Plus (should be in 18.04 repos) from [here](https://github.com/andrebrait/prime-indicator).
+
+### Turn off bluetooth on startup
+
+```
+gsettings set org.blueman.plugins.powermanager auto-power-on false
 ```
