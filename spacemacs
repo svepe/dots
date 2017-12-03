@@ -42,17 +42,18 @@ values."
      (colors :variables
               colors-colorize-identifiers 'all)
      csv
+     docker
      evil-snipe
      git
      helm
      html
+     itome-react
      javascript
      latex
      markdown
      (python :variables
              python-enable-yapf-format-on-save nil)
      org
-     react
      shell-scripts
      spell-checking
      syntax-checking
@@ -372,6 +373,21 @@ you should place your code here."
             (lambda ()
               (define-key neotree-mode-map
                [escape] 'neotree-toggle)))
+
+  (setq-default
+   ;; js2-mode
+   js2-basic-offset 2
+   ;; web-mode
+   css-indent-offset 2
+   web-mode-markup-indent-offset 2
+   web-mode-css-indent-offset 2
+   web-mode-code-indent-offset 2
+   web-mode-attr-indent-offset 2)
+
+  (with-eval-after-load 'web-mode
+    (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
 
   (setq-default
     theming-modifications
