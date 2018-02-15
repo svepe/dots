@@ -52,7 +52,8 @@ values."
      latex
      markdown
      (python :variables
-             python-enable-yapf-format-on-save nil)
+             python-enable-yapf-format-on-save nil
+             python-test-runner 'pytest)
      org
      shell-scripts
      spell-checking
@@ -319,6 +320,15 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  ;; FIXES
+  (require 'helm-bookmark)
+  (with-eval-after-load 'helm
+    (setq helm-display-function 'helm-default-display-buffer
+          ;; helm-display-buffer-reuse-frame t
+          ;; helm-use-undecorated-frame-option t
+          ))
+
   (setq neo-theme 'nerd)
   ;; Remove the size of the buffer from the spaceline
   (spaceline-toggle-buffer-size-off)
@@ -373,6 +383,10 @@ you should place your code here."
             (lambda ()
               (define-key neotree-mode-map
                [escape] 'neotree-toggle)))
+
+  (setq python-shell-interpreter "python3")
+  (setq pytest-global-name "python3 -m pytest")
+  (setq pytest-cmd-flags "-x -s -v")
 
   (setq-default
    ;; js2-mode
@@ -434,12 +448,14 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(magit-commit-arguments (quote ("--verbose"))))
+ '(magit-commit-arguments (quote ("--verbose")))
+ '(pytest-global-name "python3 -m pytest"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((((class color) (min-colors 257)) (:foreground "#F8F8F2" :background "#272822")) (((class color) (min-colors 89)) (:foreground "#F5F5F5" :background "#1B1E1C"))))
  '(company-tooltip-annotation ((t (:foreground "#ff9eb8"))))
  '(company-tooltip-annotation-selection ((t (:background "#66d9ef"))))
  '(flycheck-fringe-error ((t (:background nil :foreground "#f92663"))))
