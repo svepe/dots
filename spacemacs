@@ -331,7 +331,8 @@ you should place your code here."
   ;; Open file pointed to by a symlink
   (setq vc-follow-symlinks t)
 
-  (setq evil-snipe-scope 'visible)
+  (setq evil-snipe-override-mode t)
+  (setq evil-snipe-scope 'whole-visible)
   (setq evil-snipe-repeat-scope 'visible)
 
   (setq evil-search-module 'evil-search)
