@@ -59,7 +59,7 @@ function __promptline_vcs_branch {
   if hash git 2>/dev/null; then
     if branch=$( { git symbolic-ref --quiet HEAD || git rev-parse --short HEAD; } 2>/dev/null ); then
       branch=${branch##*/}
-      printf "%s" "${branch_symbol}${branch:-unknown}"
+      printf "%s" "${branch_symbol}${branch:-unknown}" | cut -f -4 -d '-'
       return
     fi
   fi

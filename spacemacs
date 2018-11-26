@@ -36,23 +36,41 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-return-key-behavior 'complete
+                      auto-completion-tab-key-behavior 'complete
+                      auto-completion-complete-with-key-sequence nil
+                      auto-completion-complete-with-key-sequence-delay 0.1
+                      auto-completion-private-snippets-directory nil
+                      auto-completion-enable-snippets-in-popup t
+                      auto-completion-enable-help-tooltip t
+                      auto-completion-enable-sort-by-usage nil)
      (clojure :variables
               clojure-enable-fancify-symbols t)
      (colors :variables
               colors-colorize-identifiers 'all)
+     cscope
      csv
+     (c-c++ :variables
+            c-c++-enable-clang-support t
+            c-c++-default-mode-for-headers 'c++-mode)
      evil-snipe
+     emacs-lisp
      git
      helm
      html
      javascript
      latex
-     markdown
+     (markdown :variables
+               markdown-live-preview-engine 'vmd)
      (python :variables
-             python-enable-yapf-format-on-save nil)
+             python-enable-yapf-format-on-save nil
+             python-test-runner 'pytest)
      org
      react
+     semantic
+     (shell :variables
+            shell-default-shell 'eshell)
      shell-scripts
      spell-checking
      syntax-checking
@@ -70,7 +88,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(monokai-theme)
+   dotspacemacs-additional-packages '(monokai-theme yasnippet-snippets)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -83,7 +101,6 @@ values."
    ;; them if they become unused. `all' installs *all* packages supported by
    ;; Spacemacs and never uninstall them. (default is `used-only')
    dotspacemacs-install-packages 'used-only))
-
 (defun dotspacemacs/init ()
   "Initialization function.
 This function is called at the very startup of Spacemacs initialization
@@ -150,8 +167,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+   dotspacemacs-default-font '("DejaVu Sans Mono for Powerline"
+                               :size 11.0
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -177,7 +194,7 @@ values."
    ;; and TAB or <C-m> and RET.
    ;; In the terminal, these pairs are generally indistinguishable, so this only
    ;; works in the GUI. (default nil)
-   dotspacemacs-distinguish-gui-tab nil
+   dotspacemacs-distinguish-gui-tab t
    ;; If non nil `Y' is remapped to `y$' in Evil states. (default nil)
    dotspacemacs-remap-Y-to-y$ t
    ;; If non-nil, the shift mappings `<' and `>' retain visual state if used
@@ -329,7 +346,8 @@ you should place your code here."
   ;; Open file pointed to by a symlink
   (setq vc-follow-symlinks t)
 
-  (setq evil-snipe-scope 'visible)
+  (setq evil-snipe-override-mode t)
+  (setq evil-snipe-scope 'whole-visible)
   (setq evil-snipe-repeat-scope 'visible)
 
   (setq evil-search-module 'evil-search)
@@ -371,6 +389,22 @@ you should place your code here."
             (lambda ()
               (define-key neotree-mode-map
                [escape] 'neotree-toggle)))
+
+  (setq-default
+   c-default-style "bsd"
+   c-basic-offset 4)
+
+  ;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  ;; (add-hook 'before-save-hook 'clang-format-buffer)
+
+  (setq
+   python-shell-interpreter "ipython3"
+   python-shell-interpreter-args "--simple-prompt --pprint --profile=dev")
+
+  (setq pytest-global-name "python3 -m pytest")
+  (setq pytest-cmd-flags "-x -s -v")
+
+  (require 'helm-bookmark)
 
   (setq-default
     theming-modifications
@@ -417,12 +451,16 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(magit-commit-arguments (quote ("--verbose"))))
+ '(magit-commit-arguments (quote ("--verbose")))
+ '(package-selected-packages
+   (quote
+    (vmd-mode macrostep elisp-slime-nav auto-compile packed xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help eval-in-repl yasnippet-snippets which-key web-mode use-package toc-org srefactor spaceline restart-emacs rainbow-mode pyvenv pip-requirements persp-mode org-projectile org-category-capture org-mime org-download neotree mmm-mode link-hint json-mode hy-mode hl-todo highlight-parentheses helm-projectile helm-make projectile git-timemachine git-link flycheck-pos-tip flycheck expand-region evil-mc evil-matchit evil-magit evil-iedit-state evil-escape emmet-mode dumb-jump define-word company-quickhelp company-anaconda cmake-mode clj-refactor cider sesman clojure-mode anaconda-mode aggressive-indent ace-window avy smartparens highlight evil company helm helm-core yasnippet multiple-cursors skewer-mode js2-mode simple-httpd markdown-mode org-plus-contrib magit magit-popup git-commit ghub with-editor async hydra pythonic yapfify yaml-mode ws-butler winum web-beautify volatile-highlights vi-tilde-fringe uuidgen undo-tree tagedit stickyfunc-enhance smeargle slim-mode scss-mode sass-mode rainbow-identifiers rainbow-delimiters queue pytest pyenv-mode py-isort pug-mode powerline pos-tip popwin pkg-info pcre2el paredit paradox orgit org-present org-pomodoro org-bullets open-junk-file move-text monokai-theme markdown-toc magit-gitflow lorem-ipsum livid-mode live-py-mode linum-relative less-css-mode json-snatcher json-reformat js2-refactor js-doc insert-shebang inflections indent-guide iedit hungry-delete htmlize highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-mode-manager helm-gitignore helm-flx helm-descbinds helm-css-scss helm-cscope helm-company helm-c-yasnippet helm-ag goto-chg google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-messenger git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flyspell-correct-helm flx-ido fish-mode fill-column-indicator fancy-battery eyebrowse exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-snipe evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-lisp-state evil-indent-plus evil-exchange evil-ediff evil-args evil-anzu edn disaster diminish diff-hl cython-mode csv-mode company-web company-tern company-statistics company-shell company-c-headers company-auctex column-enforce-mode color-identifiers-mode coffee-mode clojure-snippets clean-aindent-mode clang-format cider-eval-sexp-fu bind-key auto-yasnippet auto-highlight-symbol auto-dictionary adaptive-wrap ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((((class color) (min-colors 257)) (:foreground "#F8F8F2" :background "#272822")) (((class color) (min-colors 89)) (:foreground "#F5F5F5" :background "#1B1E1C"))))
  '(company-tooltip-annotation ((t (:foreground "#ff9eb8"))))
  '(company-tooltip-annotation-selection ((t (:background "#66d9ef"))))
  '(flycheck-fringe-error ((t (:background nil :foreground "#f92663"))))
