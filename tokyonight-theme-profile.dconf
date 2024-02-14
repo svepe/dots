@@ -1,0 +1,17 @@
+[/]
+background-color='#121212121212'
+bold-color='#a0a0a0a0a0a0'
+bold-color-same-as-fg=true
+cjk-utf8-ambiguous-width='narrow'
+cursor-background-color='rgb(248,248,248)'
+cursor-colors-set=true
+cursor-foreground-color='#121212121212'
+font='0xProto Nerd Font 12'
+foreground-color='rgb(248,248,242)'
+palette=['rgb(28,28,28)', 'rgb(247,118,142)', 'rgb(158,206,106)', 'rgb(255,158,100)', 'rgb(125,207,255)', 'rgb(157,124,216)', 'rgb(42,195,222)', 'rgb(204,204,204)', 'rgb(82,82,82)', 'rgb(247,118,142)', 'rgb(158,206,106)', 'rgb(255,158,100)', 'rgb(125,207,255)', 'rgb(157,124,216)', 'rgb(42,195,222)', 'rgb(248,248,248)']
+scrollback-lines=100000
+scrollbar-policy='never'
+use-system-font=false
+use-theme-colors=false
+use-theme-transparency=false
+visible-name='tokyonight'
