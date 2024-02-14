@@ -12,7 +12,7 @@ The setup uses the [Tokyongiht](https://github.com/folke/tokyonight.nvim) colors
 ```
 wget https://raw.githubusercontent.com/svepe/dots/main/setup.sh
 chmod +x setup.sh
-. setup.sh
+sudo . setup.sh
 rm setup.sh
 
 # To set fonts and terminal profile use

@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Install dependencies
-sudo apt install fzf
+apt install fzf
 
 # Download tmux
 wget https://github.com/nelsonenzo/tmux-appimage/releases/latest/download/tmux.appimage
 chmod u+x tmux.appimage
 
 # Install binary
-sudo mv $(pwd)/tmux.appimage /usr/bin/tmux
+mv $(pwd)/tmux.appimage /usr/bin/tmux
 
 # Install config
 ln -s $(pwd)/tmux.conf $HOME/.tmux.conf
