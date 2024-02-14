@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install dependencies
-apt install fzf
+apt -y install fzf
 
 # Download tmux
 wget https://github.com/nelsonenzo/tmux-appimage/releases/latest/download/tmux.appimage

@@ -1,3 +1,5 @@
+apt update && apt -y install git curl libfuse2
+
 git clone https://github.com/svepe/dots.git .dots
 
 cd .dots

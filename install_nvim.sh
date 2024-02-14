@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install dependencies
-apt install ripgrep fd-find
+apt -y install ripgrep fd-find
 
 # Download nvim
 wget https://github.com/neovim/neovim/releases/latest/download/nvim.appimage

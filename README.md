@@ -10,9 +10,9 @@ These are my dot files to set up an environment with:
 The setup uses the [Tokyongiht](https://github.com/folke/tokyonight.nvim) colorscheme.
 
 ```
+apt update && apt -y install wget
 wget https://raw.githubusercontent.com/svepe/dots/main/setup.sh
-chmod +x setup.sh
-sudo . setup.sh
+. setup.sh
 rm setup.sh
 
 # To set fonts and terminal profile use
