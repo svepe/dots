@@ -3,9 +3,9 @@ return {
     version = false,
     opts = {
         mappings = {
-            toggle = "gas",
-            split = "",
-            join = "",
+            toggle = "gat",
+            split = "gas",
+            join = "gaj",
         }
     }
 }

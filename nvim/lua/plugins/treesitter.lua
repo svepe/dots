@@ -3,7 +3,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
+      "nvim-treesitter/nvim-treesitter-textobjects",
     },
     config = function()
       local config = require("nvim-treesitter.configs")
@@ -15,10 +15,10 @@ return {
         incremental_selection = {
           enable = true,
           keymaps = {
-            init_selection = 'gsi',
-            node_incremental = 'gsi',
-            scope_incremental = 'gsc',
-            node_decremental = 'gsd',
+            init_selection = "<leader>v",
+            node_incremental = "v",
+            scope_incremental = "<leader>s",
+            node_decremental = "V",
           },
         },
         textobjects = {
@@ -27,41 +27,45 @@ return {
             lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
             keymaps = {
               -- You can use the capture groups defined in textobjects.scm
-              ['aa'] = '@parameter.outer',
-              ['ia'] = '@parameter.inner',
-              ['af'] = '@function.outer',
-              ['if'] = '@function.inner',
-              ['ac'] = '@class.outer',
-              ['ic'] = '@class.inner',
+              ["aa"] = { query="@parameter.outer", desc="argument" },
+              ["ia"] = { query="@parameter.inner", desc="argument" },
+              ["af"] = { query="@function.outer", desc="function" },
+              ["if"] = { query="@function.inner", desc="function" },
+              ["ac"] = { query="@class.outer", desc="class" },
+              ["ic"] = { query="@class.inner", desc="class" },
             },
           },
           move = {
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
             goto_next_start = {
-              ['[f'] = '@function.outer',
-              ['[c'] = '@class.outer',
+              ["]f"] = { query="@function.outer", desc="Next function start" },
+              ["]c"] = { query="@class.outer", desc="Next class start" },
+              ["]a"] = { query="@parameter.inner", desc="Next argument start" },
             },
             goto_next_end = {
-              [']f'] = '@function.outer',
-              [']c'] = '@class.outer',
+              ["]F"] = { query="@function.outer", desc="Next function end" },
+              ["]C"] = { query="@class.outer", desc="Next class end" },
+              ["]A"] = { query="@parameter.inner", desc="Next argument end" },
             },
             goto_previous_start = {
-              ['[F'] = '@function.outer',
-              ['[C'] = '@class.outer',
+              ["[f"] = { query="@function.outer", desc="Previous function start" },
+              ["[c"] = { query="@class.outer", desc="Previous class start" },
+              ["[a"] = { query="@parameter.inner", desc="Previous argument start" },
             },
             goto_previous_end = {
-              [']F'] = '@function.outer',
-              [']C'] = '@class.outer',
+              ["[F"] = { query="@function.outer", desc="Previous function end" },
+              ["[C"] = { query="@class.outer", desc="Previous class end" },
+              ["[A"] = { query="@parameter.inner", desc="Previous argument end" },
             },
           },
           swap = {
             enable = true,
             swap_next = {
-              ['gan'] = '@parameter.inner',
+              ["gan"] = { query="@parameter.inner", desc="Swap with next argument" },
             },
             swap_previous = {
-              ['gap'] = '@parameter.inner',
+              ["gap"] = { query="@parameter.inner", desc="Swap with previous argument" },
             },
           },
         },

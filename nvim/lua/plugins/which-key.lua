@@ -1,13 +1,10 @@
 return {
     "folke/which-key.nvim",
-    opts = {},
-    config = function()
-        local wk = require("which-key")
-        wk.register({
-            ["<leader>"] = {
-                f = { name = "File" },
-                b = { name = "Buffer" },
+    opts = {
+        icons = {
+                breadcrumb = require("icons").get("ui").Separator,
+                separator = require("icons").get("misc").Vbar,
+                group = "",
             },
-        })
-    end
+        },
 }
