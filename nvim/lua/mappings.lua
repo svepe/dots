@@ -17,6 +17,7 @@ wk.register({
         [";"] = { name = require("icons").get("ui").Comment .. " Comment" },
         g = { name = require("icons").get("git").Branch .. " Git" },
         d = { name = require("icons").get("ui").Bug .. " Debug" },
+        c = { name = require("icons").get("ui").Labels .. " Multiple Cursors" },
     },
     ["["] = { name = "Previous" },
     ["]"] = { name = "Next" },

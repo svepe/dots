@@ -106,6 +106,7 @@ local data = {
 		Incoming = "󰏷",
 		Indicator = "",
 		Keyboard = "",
+		Labels = "󱍵",
 		Left = "",
 		List = "",
 		Square = "",
