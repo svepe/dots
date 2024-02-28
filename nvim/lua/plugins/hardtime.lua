@@ -5,6 +5,6 @@ return {
       "nvim-lua/plenary.nvim",
    },
    opts = {
-      restriction_mode = "block", -- "hint"
+      max_count = 4,
    }
 }

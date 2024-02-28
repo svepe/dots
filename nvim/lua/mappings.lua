@@ -18,6 +18,7 @@ wk.register({
         g = { name = require("icons").get("git").Branch .. " Git" },
         d = { name = require("icons").get("ui").Bug .. " Debug" },
         c = { name = require("icons").get("ui").Labels .. " Multiple Cursors" },
+        s = { name = require("icons").get("ui").Search .. " Search" },
     },
     ["["] = { name = "Previous" },
     ["]"] = { name = "Next" },
@@ -28,8 +29,8 @@ wk.register({
 
 -- Files
 local telescope_builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", telescope_builtin.find_files, { desc = "Find file" })
-vim.keymap.set("n", "<leader>fg", telescope_builtin.live_grep, { desc = "Search in files" })
+vim.keymap.set("n", "<leader>ff", ":Telescope find_files<CR>", { desc = "Find file (working dir)" })
+vim.keymap.set("n", "<leader>fd", ":Telescope find_files cwd=%:p:h<CR>", { desc = "Find file (same dir)" })
 vim.keymap.set("n", "<leader>fr", telescope_builtin.oldfiles, { desc = "Recent files" })
 vim.keymap.set({ "n", "v" }, "<leader>fs", vim.cmd.w, { desc = "Save file" })
 vim.keymap.set("n", "<leader>fb", ":Telescope file_browser path=%:p:h<CR>", { desc = "File browser" })
@@ -54,6 +55,10 @@ end
 vim.keymap.set("n", "<leader>wd", "<C-W>c", { desc = "Close" })
 vim.keymap.set("n", "<leader>ws", "<C-W>s", { desc = "Split below" })
 vim.keymap.set("n", "<leader>wv", "<C-W>v", { desc = "Split right" })
+
+-- Search
+vim.keymap.set("n", "<leader>sf", telescope_builtin.live_grep, { desc = "Search in files" })
+vim.keymap.set({"n", "v"}, "<leader>ss", telescope_builtin.grep_string, { desc = "Search string in files" })
 
 -- Trouble
 vim.keymap.set("n", "<leader>mtl", function() require("trouble").toggle("document_diagnostics") end)
@@ -115,7 +120,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 -- DAP
-vim.keymap.set('n', '<leader>dc', function() require('dap').continue() end, { desc = "Continue / Start" })
+vim.keymap.set('n', '<leader>dd', function() require('dap').continue() end, { desc = "Start" })
+vim.keymap.set('n', '<leader>dc', function() require('dap').continue() end, { desc = "Continue" })
 vim.keymap.set('n', '<leader>dx', function() require('dap').terminate() end, { desc = "Terminate" })
 vim.keymap.set('n', '<leader>dn', function() require('dap').step_over() end, { desc = "Step over" })
 vim.keymap.set('n', '<leader>ds', function() require('dap').step_into() end, { desc = "Step into" })

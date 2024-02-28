@@ -9,7 +9,7 @@ local last_buffer = function()
       end
     end
   end
-  vim.cmd("blast")
+  vim.cmd("bprev")
 end
 
 local scratch_buffer = function()

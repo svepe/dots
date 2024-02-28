@@ -46,6 +46,8 @@ return {
                 capabilities = capabilities,
             })
             lspconfig.volar.setup({})
+            lspconfig.ruff_lsp.setup({})
+            lspconfig.jsonls.setup({})
         end,
     },
 }

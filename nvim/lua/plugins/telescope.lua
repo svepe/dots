@@ -10,11 +10,16 @@ return {
             "nvim-telescope/telescope-file-browser.nvim",
         },
     },
-    config=function()
+    config = function()
         require("telescope").setup({
             extensions = {
                 file_browser = {
                     hijack_netrw = true,
+                    mappings = {
+                        i = {
+                            ["<tab>"] = "select_default",
+                        },
+                    },
                 },
             },
         })
