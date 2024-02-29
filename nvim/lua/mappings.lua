@@ -5,6 +5,13 @@ wk.register({
         f = { name = require("icons").get("ui").File .. " File" },
         m = {
             name = require("icons").get("misc").Mode .. " Major Mode",
+            t = {
+                name = "Trouble",
+                {
+                    d = "Document issues",
+                    w = "Workspace issues",
+                }
+            },
             w = {
                 name = "Workspace",
                 {
@@ -58,11 +65,11 @@ vim.keymap.set("n", "<leader>wv", "<C-W>v", { desc = "Split right" })
 
 -- Search
 vim.keymap.set("n", "<leader>sf", telescope_builtin.live_grep, { desc = "Search in files" })
-vim.keymap.set({"n", "v"}, "<leader>ss", telescope_builtin.grep_string, { desc = "Search string in files" })
+vim.keymap.set({ "n", "v" }, "<leader>ss", telescope_builtin.grep_string, { desc = "Search string in files" })
 
 -- Trouble
-vim.keymap.set("n", "<leader>mtl", function() require("trouble").toggle("document_diagnostics") end)
-vim.keymap.set("n", "<leader>mta", function() require("trouble").toggle("workspace_diagnostics") end)
+vim.keymap.set("n", "<leader>mtd", function() require("trouble").toggle("document_diagnostics") end)
+vim.keymap.set("n", "<leader>mtw", function() require("trouble").toggle("workspace_diagnostics") end)
 
 -- Git
 vim.keymap.set(
@@ -104,7 +111,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<leader>mr', telescope_builtin.lsp_references, opts("Show references"))
         vim.keymap.set('n', '<leader>ml', telescope_builtin.diagnostics, opts("List issues"))
         vim.keymap.set('n', '<leader>mR', vim.lsp.buf.rename, opts("Rename"))
-        vim.keymap.set({ 'n', 'v' }, '<space>ma', vim.lsp.buf.code_action, opts("Show code actions"))
+        vim.keymap.set({ 'n', 'v' }, '<space>ma', vim.lsp.buf.code_action, opts("Actions"))
         vim.keymap.set('n', '<leader>mf', function() vim.lsp.buf.format { async = true } end, opts("Format"))
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts("Hover"))
         vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts("Show signature help"))
