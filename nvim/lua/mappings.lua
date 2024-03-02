@@ -20,6 +20,7 @@ wk.register({
                 },
             },
         },
+        n = { name = require("icons").get("ui").Note .. " Notes" },
         w = { name = require("icons").get("ui").Window .. " Window" },
         [";"] = { name = require("icons").get("ui").Comment .. " Comment" },
         g = { name = require("icons").get("git").Branch .. " Git" },
@@ -36,19 +37,19 @@ wk.register({
 
 -- Files
 local telescope_builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", ":Telescope find_files<CR>", { desc = "Find file (working dir)" })
-vim.keymap.set("n", "<leader>fd", ":Telescope find_files cwd=%:p:h<CR>", { desc = "Find file (same dir)" })
+vim.keymap.set("n", "<leader>ff", ":Telescope find_files<cr>", { desc = "Find file (working dir)", silent = true })
+vim.keymap.set("n", "<leader>fd", ":Telescope find_files cwd=%:p:h<cr>", { desc = "Find file (same dir)", silent = true })
 vim.keymap.set("n", "<leader>fr", telescope_builtin.oldfiles, { desc = "Recent files" })
 vim.keymap.set({ "n", "v" }, "<leader>fs", vim.cmd.w, { desc = "Save file" })
-vim.keymap.set("n", "<leader>fb", ":Telescope file_browser path=%:p:h<CR>", { desc = "File browser" })
-vim.keymap.set("n", "<leader>ft", ":Neotree filesystem reveal left<CR>", { desc = "Show filte tree" })
+vim.keymap.set("n", "<leader>fb", ":Telescope file_browser path=%:p:h<cr>", { desc = "File browser", silent = true })
+vim.keymap.set("n", "<leader>ft", ":Neotree filesystem reveal left<cr>", { desc = "Show filte tree", silent = true })
 
 -- Buffers
 vim.keymap.set("n", "<leader>bb", telescope_builtin.buffers, { desc = "Find buffer" })
 vim.keymap.set("n", "<leader><tab>", require("utils").last_buffer, { desc = "Alternate buffer" })
 vim.keymap.set("n", "<leader>bn", function() vim.cmd("bn") end, { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bp", function() vim.cmd("bp") end, { desc = "Previous buffer" })
-vim.keymap.set("n", "<leader>bd", ":lua MiniBufremove.delete()<cr>", { silent = true, desc = "Delete buffer" })
+vim.keymap.set("n", "<leader>bd", ":lua MiniBufremove.delete()<cr>", { desc = "Delete buffer", silent = true })
 vim.keymap.set("n", "<leader>bs", require("utils").scratch_buffer, { desc = "Scratch buffer" })
 
 -- Windows
@@ -154,3 +155,7 @@ vim.keymap.set('n', '<leader>dS', function()
     local widgets = require('dap.ui.widgets')
     widgets.centered_float(widgets.scopes)
 end, { desc = "Scopes" })
+
+-- TODO comments
+vim.keymap.set('n', '<leader>nl', ":TodoTrouble<cr>", { desc = "List notes" , silent=true })
+vim.keymap.set('n', '<leader>ns', ":TodoTelescope<cr>", { desc = "Search notes", silent=true })
